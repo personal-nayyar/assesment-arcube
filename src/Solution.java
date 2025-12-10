@@ -35,13 +35,47 @@ public class Solution {
     }
 
     public static void main(String[] args) {
+        // console input
+        Scanner sc = new Scanner(System.in);
+        //        CURRENCY MAX_STOPS MAX_TOTAL_DURATION REQUIRE_BAG
+        String currency = sc.next();
+        int maxStops = sc.nextInt();
+        int maxTotalDuration = sc.nextInt();
+        boolean requireBag = sc.nextBoolean();
+        SearchCriteria criteria = new SearchCriteria(currency, maxStops, maxTotalDuration, requireBag);
+
+        int n = sc.nextInt();
+
+        List<Offer> offers = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            //        OFFER_ID ITINERARY_ID PROVIDER_CODE PRICE CURRENCY STOPS TOTAL_DURATION, INCLUDES_BAG REFUNDABLE
+            String offerId = sc.next();
+            String itineraryId = sc.next();
+            String providerCode = sc.next();
+            double price = sc.nextDouble();
+            String currencyOffer = sc.next();
+            int stops = sc.nextInt();
+            int totalDuration = sc.nextInt();
+            boolean includesBag = sc.nextBoolean();
+            boolean refundable = sc.nextBoolean();
+
+            Offer offer = new Offer(offerId, itineraryId, providerCode, currencyOffer, price, stops, totalDuration, includesBag, refundable);
+            offers.add(offer);
+        }
+
+        bestOffer(offers, criteria);
+
+//        defaultTests();
+    }
+
+    public static void defaultTests(){
         List<Offer> offers = Arrays.asList(
                 new Offer("OFF001", "ITN100", "6E","EUR", 150.00 ,1, 320, true, false),
                 new Offer("OFF002", "ITN100", "MMT","EUR", 150.00 ,1, 300, true, true),
                 new Offer("OFF003", "ITN100", "EK","EUR", 200.00 ,0, 280, true, true),
                 new Offer("OFF004", "ITN200", "LH","EUR", 180.00 ,1, 400, false, false),
                 new Offer("OFF005", "ITN200", "AI","EUR", 190.00 ,1, 350, true, false)
-                );
+        );
 
         SearchCriteria criteria = new SearchCriteria("EUR", 2 ,600, true);
         bestOffer(offers, criteria);
